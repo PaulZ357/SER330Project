@@ -6,14 +6,26 @@ const {checkPassword, newToken} = require('../utils/utility.function')
 
 const signUpUser = async (req, res) => {
   const {email, fullName, password} = req.body
+  if (!email) {
+    sendResponseError(400, 'Email is not provided', res)
+    return
+  }
+  if (!fullName) {
+    sendResponseError(400, 'Full Name is not provided', res)
+    return
+  }
+  if (!password) {
+    sendResponseError(400, 'Password is not provided', res)
+    return
+  }
   try {
     const hash = await bcrypt.hash(password, 8)
 
-    await User.create({...req.body, password: hash})
+    await User.create({email: email, fullName: fullName, password: hash})
     res.status(201).send('Sucessfully account opened ')
     return
   } catch (err) {
-    console.log('Eorror : ', err)
+    console.log('Error : ', err)
     sendResponseError(500, 'Something wrong please try again', res)
     return
   }
@@ -24,7 +36,7 @@ const signInUser = async (req, res) => {
   console.log(req.body)
   try {
     const user = await User.findOne({email})
-    if (!!!user) {
+    if (!user) {
       sendResponseError(400, 'You have to Sign up first !', res)
     }
 

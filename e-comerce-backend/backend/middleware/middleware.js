@@ -7,26 +7,20 @@ const sendResponseError = (statusCode, msg, res) => {
 
 const verifyUser = async (req, res, next) => {
   const {authorization} = req.headers
-  if (!authorization) {
-    sendResponseError(400, 'You are not authorized ', res)
-    return
-  } else if (!authorization.startsWith('Bearer ')) {
+  if (!authorization || !authorization.startsWith('Bearer ')) {
     sendResponseError(400, 'You are not authorized ', res)
     return
   }
-
   try {
     const payload = await verifyToken(authorization.split(' ')[1])
     console.log(payload)
-    if (payload) {
-      const user = await User.findById(payload.id, {password: 0})
-
-      req['user'] = user
-
-      next()
-    } else {
-      sendResponseError(400, `you are not authorizeed`, res)
+    if (!payload) {
+      sendResponseError(400, `You are not authorized `, res)
     }
+    const user = await User.findById(payload.id, {password: 0})
+    req['user'] = user
+
+    next()
   } catch (err) {
     console.log('Error ', err)
     sendResponseError(400, `Error ${err}`, res)

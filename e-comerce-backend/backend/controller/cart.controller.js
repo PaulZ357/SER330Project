@@ -3,7 +3,7 @@ const Cart = require('../models/Cart')
 const getCartProducts = async (req, res) => {
   try {
     const carts = await Cart.find({userId: req.user._id}).populate('productId')
-    // console.log(carts)
+    
     res.status(200).send({status: 'ok', carts})
   } catch (err) {
     console.log(err)
@@ -30,7 +30,7 @@ const deleteProductInCart = async (req, res) => {
   try {
     await Cart.findByIdAndRemove(req.params.id)
     res.status(200).send({status: 'ok'})
-  } catch (e) {
+  } catch (err) {
     console.log(err)
     sendResponseError(500, `Error ${err}`, res)
   }

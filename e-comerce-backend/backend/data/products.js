@@ -9,7 +9,7 @@ const products = [
     countInStock: 15,
   },
   {
-    name: "Iphone 12",
+    name: "iPhone 12",
     imageUrl:
       "https://images.unsplash.com/photo-1605787020600-b9ebd5df1d07?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1463&q=80",
     description:
