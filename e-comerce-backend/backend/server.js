@@ -22,4 +22,7 @@ app.use("/api/user", userRoutes);
 app.use("/api/cart", cartRoutes);
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+//app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+// Export the app for testing
+module.exports = app;
